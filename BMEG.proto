@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+message BMEG_Clustering {
+	string name = 1;
+	clustering_metadata metadata = 2;
+	repeated clustering_group groups = 3;
+
+	enum member_type {              
+		SAMPLES = 0; 
+		GENES = 1;
+	}
+
+	message clustering_metadata{
+		string description = 1;
+		member_type membertype = 2;
+	}
+
+	message clustering_group {
+		string name = 1; //this would be the cluster name. E.G. ic01, ic02...etc.
+		repeated string members = 2;
+	}
+
+}
