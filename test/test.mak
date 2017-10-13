@@ -9,8 +9,8 @@ TARGETS=message.json
 message.json: compile_pb
 	python3 BMEG_addData.py \
 		--metadata_file $(TEST_METADATA_FILE) \
-		--cluster_assignment_file $(CLUSTER_ASSIGNMENT_FILE) \
-	> message.json ;
+		--clusters_file $(CLUSTER_ASSIGNMENT_FILE) \
+		--output_file $@ ;
 
 compile_pb:
 	protoc --python_out=. $(PROTO_FILE) ;
