@@ -12,11 +12,14 @@ class CommandLine() :
 	def __init__(self, inOpts=None) :
 		import argparse
 
-		self.parser = argparse.ArgumentParser("This program accepts metadata file input, cluster files, etc, and writes a JSON message")
+		self.parser = argparse.ArgumentParser("This program accepts metadata file input, cluster files, and outpout file, and writes a JSON message")
 		'''First argument is metadatafile.'''
 		self.parser.add_argument('-metadataFile', '--metadata_file')
 		'''Second argument is the clusterfile'''
 		self.parser.add_argument('-clusterFile', '--clusters_file')
+		'''Third argument is the output file'''
+		self.parser.add_argument('-outputFile', '--output_file', default='JSONmessage.txt')
+
 
 		if inOpts is None :
 			self.args = self.parser.parse_args()
@@ -74,49 +77,49 @@ class writeMessage():
 				data.metadata.description = v
 			if k == 'method_parameters_JSON':
 				data.metadata.clustering_method_parameters_JSON = v
-			if k == 'method_input_datatypes_JSON':
-				data.clustering_method_input_datatypes_JSON  = v
+
+			"""AGAIN GETTING ATTRIBUTE ERROR HERE"""
+			# if k == 'method_input_datatypes_JSON':
+			# 	data.clustering_method_input_datatypes_JSON = v
+			
 			if k =='method_name':
 				data.metadata.clustering_method = v
 			if k == 'cluster_member_type':
-				data.metadata.membertype = v 
+				data.metadata.member_type = v 
 
 
 			for k,v in self.clusterFile_dict.items():
 				group = data.groups.add()
-				group = v #a list of sample names
-				for name in v:
-					group.name = name # cluster_ID
+				group.name = k
+				group.members.extend(v)
+
 
 			#change to JSON format
-			return MessageToJson(data)
+		return MessageToJson(data)
 
 def main():
 	command_line = CommandLine()
+	#clustering file from command line
 	cluster_fn = command_line.args.clusters_file
+	#metadata file from command line
 	metadata_fn = command_line.args.metadata_file
 
-	#MAIN PROCEDURE - adding data
+	#MAIN PROCEDURE - writing message
 	cluster_data = BMEG_pb2.BMEG_Clustering()
 
-
+	#calling methods from writeMessage class
 	res = writeMessage()
 	res.clusterFileParser(cluster_fn)
 	res.metadataFileParser(metadata_fn)
 	res.AddData(cluster_data)
 
-	
-
-
-
-	# for i in range(1): #this range can be the number of lines in the file
-	# 	'''OPTION 1: Write the new data to a new file named test.txt'''
-	# 	# with open('test.txt', "wb") as f:
-	# 	# 	f.write(MessageToJson(cluster_data))
-
-
-	# 	'''OPTION 2: Print in command line'''
-	# 	print(AddData(cluster_data))
+	if len(sys.argv) != 5:
+		print("Usage:", sys.argv[0], "REQUIRED: -clusterFile -metadaFile, OPTIONAL: -outputFile")
+		sys.exit(-1)
+	else:
+		#Writing message to output file
+		with open(command_line.args.output_file, "w") as f:
+			f.write(res.AddData(cluster_data))
 
 if __name__ == "__main__":
 	main()
