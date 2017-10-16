@@ -60,15 +60,14 @@ class writeMessage():
 			for line in lines:
 				end = line.find('\t')+1
 
-<<<<<<< HEAD
+
 				key = line[0:end].rstrip()
 				value = line[end:].rstrip()
 
-=======
+
 				key = line[0:end].rstrip() #key is the label of each line
 				value = line[end:].rstrip() #value is the description provided for the key
 				#building dicitionary
->>>>>>> 9b88592ae2d46b2355f6ac36dca70b7e11965fff
 				self.metadataFile_dict[key]=value
 
 
@@ -85,13 +84,11 @@ class writeMessage():
 				data.metadata.clustering_method_parameters_JSON = v
 
 			"""AGAIN GETTING ATTRIBUTE ERROR HERE"""
-			# if k == 'method_input_datatypes_JSON':
-			# 	data.clustering_method_input_datatypes_JSON = v
-<<<<<<< HEAD
+			if k == 'method_input_datatypes_JSON':
+				# print(str(v))
+				data.clustering_method_input_datatypes_JSON = str(v)
 			
-=======
 
->>>>>>> 9b88592ae2d46b2355f6ac36dca70b7e11965fff
 			if k =='method_name':
 				data.metadata.clustering_method = v
 			if k == 'cluster_member_type':
