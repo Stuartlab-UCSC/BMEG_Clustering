@@ -84,9 +84,9 @@ class writeMessage():
 				data.metadata.clustering_method_parameters_JSON = v
 
 			"""AGAIN GETTING ATTRIBUTE ERROR HERE"""
-			if k == 'method_input_datatypes_JSON':
+			# if k == 'method_input_datatypes_JSON':
 				# print(str(v))
-				data.clustering_method_input_datatypes_JSON = str(v)
+				# data.clustering_method_input_datatypes_JSON = str(v)
 			
 
 			if k =='method_name':
