@@ -4,6 +4,7 @@
 import BMEG_pb2
 import sys
 from google.protobuf.json_format import MessageToJson
+import json
 
 
 """CommandLine class to import args from commandline."""
@@ -81,12 +82,10 @@ class writeMessage():
 			if k == 'method_description':
 				data.metadata.description = v
 			if k == 'method_parameters_JSON':
-				data.metadata.clustering_method_parameters_JSON = v
+				data.metadata.clustering_method_parameters_JSON = str(v)
 
-			"""AGAIN GETTING ATTRIBUTE ERROR HERE"""
-			# if k == 'method_input_datatypes_JSON':
-				# print(str(v))
-				# data.clustering_method_input_datatypes_JSON = str(v)
+			if k == 'method_input_datatypes_JSON':
+				data.metadata.clustering_method_input_datatypes_JSON = str(v)
 			
 
 			if k =='method_name':
