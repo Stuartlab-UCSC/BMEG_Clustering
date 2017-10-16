@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-#Name: Ioannis Anastopoulos
+#Name: Ioannis Nikolaos Anastopoulos
 
 import BMEG_pb2
 import sys
