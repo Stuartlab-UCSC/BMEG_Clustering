@@ -132,7 +132,8 @@ def main():
 	else:
 		#Writing message to output file
 		with open(command_line.args.output_file, "w") as f:
-			f.write(res.AddData(cluster_data))
+			strJson = res.AddData(cluster_data)
+			f.write("%s\n" % (strJson))
 
 if __name__ == "__main__":
 	main()
