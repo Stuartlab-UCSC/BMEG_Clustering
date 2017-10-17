@@ -57,7 +57,7 @@ class writeMessage():
 	def metadataFileParser(self, metadata):
 		with open(metadata) as fn:
 			lines = (fn.readlines())
-			
+
 			for line in lines:
 				end = line.find('\t')+1
 
@@ -82,16 +82,19 @@ class writeMessage():
 			if k == 'method_description':
 				data.metadata.description = v
 			if k == 'method_parameters_JSON':
-				data.metadata.clustering_method_parameters_JSON = str(v)
+				# check valid json
+				paramsDict = json.loads(str(v))
+				data.metadata.clustering_method_parameters_JSON = json.dumps(paramsDict)
 
 			if k == 'method_input_datatypes_JSON':
-				data.metadata.clustering_method_input_datatypes_JSON = str(v)
-			
+				datatypes = json.loads(str(v))
+				for datatype in datatypes:
+					data.metadata.clustering_method_input_datatypes.append(datatype)
 
 			if k =='method_name':
 				data.metadata.clustering_method = v
 			if k == 'cluster_member_type':
-				data.metadata.member_type = v 
+				data.metadata.member_type = v
 
 
 			for k,v in self.clusterFile_dict.items():
@@ -100,8 +103,12 @@ class writeMessage():
 				group.members.extend(v)
 
 
-			#change to JSON format
-		return MessageToJson(data)
+		#change to JSON format
+		# MessageToJson does not have option to output compact JSON !!!
+		strJson = MessageToJson(data)
+		objJson = json.loads(strJson)
+		strJson = json.dumps(objJson, separators=(',', ':'))
+		return strJson
 
 def main():
 	command_line = CommandLine()
@@ -117,7 +124,7 @@ def main():
 	res = writeMessage()
 	res.clusterFileParser(cluster_fn)
 	res.metadataFileParser(metadata_fn)
-	res.AddData(cluster_data)
+	# res.AddData(cluster_data)
 
 	if len(sys.argv) != 5:
 		print("Usage:", sys.argv[0], "REQUIRED: -clusterFile -metadaFile, OPTIONAL: -outputFile")

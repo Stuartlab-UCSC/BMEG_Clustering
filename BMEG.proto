@@ -12,7 +12,7 @@ message BMEG_Clustering {
 		string member_type = 3;
 		string clustering_method = 4;
 		string clustering_method_parameters_JSON = 5; // maybe a stringified JSON object for this one.. hard to generalize to all clustering methods
-		string clustering_method_input_datatypes_JSON = 6; // something like iCluster uses multiple input types... make this a stringified JSON, too
+		repeated string clustering_method_input_datatypes = 6; // something like iCluster uses multiple input types
 	}
 
 	message clustering_group {
