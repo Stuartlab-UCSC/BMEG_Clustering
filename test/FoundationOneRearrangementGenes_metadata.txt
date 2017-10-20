@@ -1,4 +1,4 @@
-clustering_name	FoundationOne gene panel
+clustering_name	FoundationOne Rearrangements gene panel
 cluster_member_type	gene
 method_name	targeted gene panel
 method_description

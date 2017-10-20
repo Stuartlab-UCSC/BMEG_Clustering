@@ -1,7 +1,0 @@
-clustering_name	Foundation one Rearrangement Genes
-cluster_member_type	genes
-method_name	Targeted panel
-method_description	
-input datatypes: 
-method_parameters_JSON	{}
-method_input_datatypes_JSON	[]

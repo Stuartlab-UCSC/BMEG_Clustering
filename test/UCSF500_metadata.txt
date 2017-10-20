@@ -1,6 +1,6 @@
-clustering_name	UCSFT500 Genes
-cluster_member_type	genes
-method_name	Targeted panel
+clustering_name	UCSF500 gene panel
+cluster_member_type	gene
+method_name	targeted gene panel
 method_description	
 input datatypes: 
 method_parameters_JSON	{}
