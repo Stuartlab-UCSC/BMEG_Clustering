@@ -1,1 +1,1 @@
-test/test.mak
+lib/bmeg_cluster_messages.mak

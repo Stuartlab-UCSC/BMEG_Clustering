@@ -1,7 +1,0 @@
-clustering_name	FoundationOne gene panel
-cluster_member_type	gene
-method_name	targeted gene panel
-method_description
-input datatypes:
-method_parameters_JSON	{}
-method_input_datatypes_JSON	[]
