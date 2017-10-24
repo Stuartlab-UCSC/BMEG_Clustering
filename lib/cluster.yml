@@ -1,0 +1,35 @@
+#cluster(c1,c2..etc) --> iClusters assignment
+-label: iClusters
+	gid: "iClusters:{metadata:{description}, {memberType}, {clusteringMethod}, {clusteringMethodParametersJSON}}:{{groups}}:{{members}}"
+	vertexes:
+		-label: iClusters
+		merge: True
+		filter:
+			-groups
+	
+	edges:
+		-fromLabel: iClusters
+		toLabel: cluster
+		label: clusterIniCluster
+		from: "iClusters:{metadata:{description}, {memberType}, {clusteringMethod}, {clusteringMethodParametersJSON}}:{{groups}}:{{members}}"
+		to: {{name}}
+
+#cluster_samples --> cluster(c1,c2..etc)
+#prob needs work
+-label: members
+	gid: "groups:{{members}}"
+	vertexes: 
+		-label: members
+		merge: True
+		-filter:
+			members
+
+	edges: 
+		-fromLabel: members
+		toLabel: groups
+		label: membersInGroups
+		from: "groups:{{members}}"
+		to: {{members}}
+
+
+
