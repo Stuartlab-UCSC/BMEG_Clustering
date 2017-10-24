@@ -1,21 +1,44 @@
 syntax = "proto3";
 
-message BMEG_Clustering {
+message sample_group {
 	string name = 1;
 	clustering_metadata metadata = 2;
-	repeated clustering_group groups = 3;
+	repeated sample_set groups = 3;
 
 
 	message clustering_metadata{
 		string clustering_name = 1;
 		string description = 2;
-		string member_type = 3;
+		// string member_type = 3;
 		string clustering_method = 4;
 		string clustering_method_parameters_JSON = 5; // maybe a stringified JSON object for this one.. hard to generalize to all clustering methods
 		repeated string clustering_method_input_datatypes = 6; // something like iCluster uses multiple input types
 	}
 
-	message clustering_group {
+	message sample_set {
+		string name = 1; //this would be the cluster name. E.G. ic01, ic02...etc.
+		repeated string members = 2;
+	}
+
+}
+
+
+message gene_group {
+	string name = 1;
+	clustering_metadata metadata = 2;
+	repeated gene_set groups = 3;
+
+
+	message clustering_metadata{
+		string clustering_name = 1;
+		string description = 2;
+		// string member_type = 3;
+		string clustering_method = 4;
+		string clustering_method_parameters_JSON = 5; // maybe a stringified JSON object for this one.. hard to generalize to all clustering methods
+		repeated string clustering_method_input_datatypes = 6; // something like iCluster uses multiple input types
+	}
+
+	message gene_set {
 		string name = 1; //this would be the cluster name. E.G. ic01, ic02...etc.
 		repeated string members = 2;
 	}
