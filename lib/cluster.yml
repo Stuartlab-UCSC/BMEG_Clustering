@@ -1,35 +1,29 @@
-#cluster(c1,c2..etc) --> iClusters assignment
--label: iClusters
-	gid: "iClusters:{metadata:{description}, {memberType}, {clusteringMethod}, {clusteringMethodParametersJSON}}:{{groups}}:{{members}}"
+-label: Method
+	gid: "Method:{metadata:{description}, {clusteringMethod}, {clusteringMethodParametersJSON}}"
 	vertexes:
-		-label: iClusters
+		-label: Method
 		merge: True
 		filter:
 			-groups
-	
+
+#cluster(c1,c2..etc) --> iClusters assignment
+
 	edges:
-		-fromLabel: iClusters
-		toLabel: cluster
-		label: clusterIniCluster
-		from: "iClusters:{metadata:{description}, {memberType}, {clusteringMethod}, {clusteringMethodParametersJSON}}:{{groups}}:{{members}}"
-		to: {{name}}
+		-index: groups
+		 fromLabel: Method
+		 toLabel: cluster
+		 label: clusterInMethod
+		 from: "iClusters:{metadata:{description}, {clusteringMethod}, {clusteringMethodParametersJSON}}"
+		 to: {{_index.name}}
 
 #cluster_samples --> cluster(c1,c2..etc)
-#prob needs work
--label: members
-	gid: "groups:{{members}}"
-	vertexes: 
-		-label: members
-		merge: True
-		-filter:
-			members
 
-	edges: 
-		-fromLabel: members
-		toLabel: groups
-		label: membersInGroups
-		from: "groups:{{members}}"
-		to: {{members}}
+	edges:
+		-index: groups
+		 fromLabel: Cluster
+		 toLabel: sample
+		 label: sampleInCluster
+		 from: "iClusters:{metadata:{description}, {clusteringMethod}, {clusteringMethodParametersJSON}}"
+		 to: {{_index.members}}
 
-
-
+#won't the above do it for both genes and clusters?
