@@ -1,19 +1,19 @@
--label: Method
-	gid: "Method:{metadata:{description}, {clusteringMethod}, {clusteringMethodParametersJSON}}"
+-label: sample_group
+	gid: "sample_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON}, {clustering_method_input_datatypes}}"
 	vertexes:
 		-label: Method
 		merge: True
 		filter:
 			-groups
 
-#cluster(c1,c2..etc) --> iClusters assignment
+#cluster(c1,c2..etc) --> Cluster method
 
 	edges:
 		-index: groups
 		 fromLabel: Method
 		 toLabel: cluster
 		 label: clusterInMethod
-		 from: "iClusters:{metadata:{description}, {clusteringMethod}, {clusteringMethodParametersJSON}}"
+		 from: "sample_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON},{clustering_method_input_datatypes}}"
 		 to: {{_index.name}}
 
 #cluster_samples --> cluster(c1,c2..etc)
@@ -23,7 +23,26 @@
 		 fromLabel: Cluster
 		 toLabel: sample
 		 label: sampleInCluster
-		 from: "iClusters:{metadata:{description}, {clusteringMethod}, {clusteringMethodParametersJSON}}"
+		 from: "sample_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON},{clustering_method_input_datatypes}}"
 		 to: {{_index.members}}
 
-#won't the above do it for both genes and clusters?
+
+-label: gene_group
+	gid: "gene_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON}, {clustering_method_input_datatypes}}"
+	vertexes:
+		-label: Method
+		merge: True
+		filter:
+			-groups
+
+#gene panels --> genes in gene panel
+
+	edges:
+		-index: groups
+		 fromLabel: GenePanel
+		 toLabel: genes
+		 label: genesInGenePanel
+		 from: "gene_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON}, {clustering_method_input_datatypes}}"
+		 to: {{_index.members}}
+
+
