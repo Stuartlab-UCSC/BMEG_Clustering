@@ -1,7 +1,7 @@
 -label: sample_group
 	gid: "sample_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON}, {clustering_method_input_datatypes}}"
 	vertexes:
-		-label: Method
+		-label: sample_group
 		merge: True
 		filter:
 			-groups
@@ -30,7 +30,7 @@
 -label: gene_group
 	gid: "gene_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON}, {clustering_method_input_datatypes}}"
 	vertexes:
-		-label: Method
+		-label: gene_group
 		merge: True
 		filter:
 			-groups
