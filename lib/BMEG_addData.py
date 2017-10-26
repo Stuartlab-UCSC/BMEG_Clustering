@@ -73,7 +73,7 @@ class writeMessage():
 
 
 	def AddData(self, data):
-		#Adding PanCancerAtlas
+		#Converting metadata and cluster data to JSON format
 		for k,v in self.metadataFile_dict.items():
 			if k == 'clustering_name':
 				data.name =v
@@ -93,8 +93,12 @@ class writeMessage():
 
 			if k =='method_name':
 				data.metadata.clustering_method = v
-			if k == 'cluster_member_type':
-				data.metadata.member_type = v
+
+
+			####---removed from .proto file-----###
+			# if k == 'cluster_member_type':
+			# 	data.metadata.member_type = v
+			####---removed from .proto file-----###
 
 
 			for k,v in self.clusterFile_dict.items():
@@ -112,13 +116,15 @@ class writeMessage():
 
 def main():
 	command_line = CommandLine()
-	#clustering file from command line
+	#clustering file from command line - clustering file, can be either cluster samples, of genes in gene panels
 	cluster_fn = command_line.args.clusters_file
 	#metadata file from command line
 	metadata_fn = command_line.args.metadata_file
 
 	#MAIN PROCEDURE - writing message
-	cluster_data = BMEG_pb2.BMEG_Clustering()
+	sample_data = BMEG_pb2.sample_group() #data for clusters
+	gene_data = BMEG_pb2.gene_group()
+
 
 	#calling methods from writeMessage class
 	res = writeMessage()
@@ -129,11 +135,18 @@ def main():
 	if len(sys.argv) != 5:
 		print("Usage:", sys.argv[0], "REQUIRED: -clusterFile -metadaFile, OPTIONAL: -outputFile")
 		sys.exit(-1)
-	else:
-		#Writing message to output file
-		with open(command_line.args.output_file, "w") as f:
-			strJson = res.AddData(cluster_data)
-			f.write("%s\n" % (strJson))
+	else: #using appropriate message based on whether gene panels, or cluster members(samples) have been enteredß
+		for k,v in res.metadataFile_dict.items():
+			if k == 'cluster_member_type' and v=='gene':
+				#Writing message to output file
+				with open(command_line.args.output_file, "w") as f:
+					strJson = res.AddData(gene_data)
+					f.write("%s\n" % (strJson))
+			elif k == 'cluster_member_type' and v=='sample':
+				#Writing message to output file
+				with open(command_line.args.output_file, "w") as f:
+					strJson = res.AddData(sample_data)
+					f.write("%s\n" % (strJson))
 
 if __name__ == "__main__":
 	main()
