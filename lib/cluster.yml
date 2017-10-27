@@ -1,20 +1,20 @@
--label: sample_group
-	gid: "sample_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON}, {clustering_method_input_datatypes}}"
+-label: Method
+	gid: "Method:{{clustering_name}}:{{description}}:{{clustering_method}}:{{clustering_method_parameters_JSON}}:{{clustering_method_input_datatypes}}"
 	vertexes:
-		-label: sample_group
+		-label: Method
 		merge: True
 		filter:
-			-groups
+			-clusters
 
 #cluster(c1,c2..etc) --> Cluster method
 
 	edges:
-		-index: groups
+		-index: clusters
 		 fromLabel: Method
 		 toLabel: cluster
 		 label: clusterInMethod
-		 from: "sample_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON},{clustering_method_input_datatypes}}"
-		 to: {{_index.name}}
+		 from: "Method:{{clustering_name}}:{{description}}:{{clustering_method}}:{{clustering_method_parameters_JSON}}:{{clustering_method_input_datatypes}}"
+		 to: {{_index.cluster_label}}
 
 #cluster_samples --> cluster(c1,c2..etc)
 
@@ -23,26 +23,6 @@
 		 fromLabel: Cluster
 		 toLabel: sample
 		 label: sampleInCluster
-		 from: "sample_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON},{clustering_method_input_datatypes}}"
+		 from: "Method:{{clustering_name}}:{{description}}:{{clustering_method}}:{{clustering_method_parameters_JSON}}:{{clustering_method_input_datatypes}}"
 		 to: {{_index.members}}
-
-
--label: gene_group
-	gid: "gene_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON}, {clustering_method_input_datatypes}}"
-	vertexes:
-		-label: gene_group
-		merge: True
-		filter:
-			-groups
-
-#gene panels --> genes in gene panel
-
-	edges:
-		-index: groups
-		 fromLabel: GenePanel
-		 toLabel: genes
-		 label: genesInGenePanel
-		 from: "gene_group:{{name}}:{metadata:{description}, {clustering_method}, {clustering_method_parameters_JSON}, {clustering_method_input_datatypes}}"
-		 to: {{_index.members}}
-
 
