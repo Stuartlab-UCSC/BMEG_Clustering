@@ -18,7 +18,7 @@ class CommandLine() :
 		self.parser.add_argument('-metadataFile', '--metadata_file')
 		'''Second argument is the clusterfile'''
 		self.parser.add_argument('-clusterFile', '--clusters_file')
-		'''Third argument is the output file'''
+		'''Fourth argument is the Cluster name and cluster members output file'''
 		self.parser.add_argument('-outputFile', '--output_file', default='JSONmessage.txt')
 
 
@@ -72,40 +72,39 @@ class writeMessage():
 				self.metadataFile_dict[key]=value
 
 
-	def AddData(self, data):
-		#Converting metadata and cluster data to JSON format
+	def addData(self, data):
+		#Converting metadata JSON format for Method clustering was done
 		for k,v in self.metadataFile_dict.items():
+			method = data.methods.add()
 			if k == 'clustering_name':
-				data.name =v
+				method.clustering_name =v
 
 			#Adding metadata
 			if k == 'method_description':
-				data.metadata.description = v
-			if k == 'method_parameters_JSON':
-				# check valid json
-				paramsDict = json.loads(str(v))
-				data.metadata.clustering_method_parameters_JSON = json.dumps(paramsDict)
-
-			if k == 'method_input_datatypes_JSON':
-				datatypes = json.loads(str(v))
-				for datatype in datatypes:
-					data.metadata.clustering_method_input_datatypes.append(datatype)
-
-			if k =='method_name':
-				data.metadata.clustering_method = v
-
+				method.description = v
 
 			####---removed from .proto file-----###
 			# if k == 'cluster_member_type':
 			# 	data.metadata.member_type = v
 			####---removed from .proto file-----###
 
+			if k =='method_name':
+				method.clustering_method = v
 
-			for k,v in self.clusterFile_dict.items():
-				group = data.groups.add()
-				group.name = k
-				group.members.extend(v)
+			if k == 'method_parameters_JSON':
+				# check valid json
+				paramsDict = json.loads(str(v))
+				method.clustering_method_parameters_JSON = json.dumps(paramsDict)
 
+			if k == 'method_input_datatypes_JSON':
+				datatypes = json.loads(str(v))
+				for datatype in datatypes:
+					method.clustering_method_input_datatypes.append(datatype)
+
+		for k,v in self.clusterFile_dict.items():
+			group = data.clusters.add()
+			group.cluster_label = k
+			group.members.extend(v)
 
 		#change to JSON format
 		# MessageToJson does not have option to output compact JSON !!!
@@ -113,6 +112,8 @@ class writeMessage():
 		objJson = json.loads(strJson)
 		strJson = json.dumps(objJson, separators=(',', ':'))
 		return strJson
+
+
 
 def main():
 	command_line = CommandLine()
@@ -122,8 +123,8 @@ def main():
 	metadata_fn = command_line.args.metadata_file
 
 	#MAIN PROCEDURE - writing message
-	sample_data = BMEG_pb2.sample_group() #data for clusters
-	gene_data = BMEG_pb2.gene_group()
+	# method_data = BMEG_pb2.Method() #information about clustering method used
+	method_cluster_data = BMEG_pb2.Cluster() #members in the cluster beloging in Method
 
 
 	#calling methods from writeMessage class
@@ -135,18 +136,11 @@ def main():
 	if len(sys.argv) != 5:
 		print("Usage:", sys.argv[0], "REQUIRED: -clusterFile -metadaFile, OPTIONAL: -outputFile")
 		sys.exit(-1)
-	else: #using appropriate message based on whether gene panels, or cluster members(samples) have been enteredß
-		for k,v in res.metadataFile_dict.items():
-			if k == 'cluster_member_type' and v=='gene':
-				#Writing message to output file
-				with open(command_line.args.output_file, "w") as f:
-					strJson = res.AddData(gene_data)
-					f.write("%s\n" % (strJson))
-			elif k == 'cluster_member_type' and v=='sample':
-				#Writing message to output file
-				with open(command_line.args.output_file, "w") as f:
-					strJson = res.AddData(sample_data)
-					f.write("%s\n" % (strJson))
+	else: 
+		#Writing message to output file
+		with open(command_line.args.output_file, "w") as f:
+			strJson = res.addData(method_cluster_data)
+			f.write("%s\n" % (strJson))
 
 if __name__ == "__main__":
 	main()
