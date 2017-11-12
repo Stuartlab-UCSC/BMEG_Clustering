@@ -1,28 +1,33 @@
--label: Method
-	gid: "Method:{{clustering_name}}:{{description}}:{{clustering_method}}:{{clustering_method_parameters_JSON}}:{{clustering_method_input_datatypes}}"
-	vertexes:
-		-label: Method
-		merge: True
-		filter:
-			-clusters
+- label: Method
+  vertexes:
+    - label: Method
+      gid: "method:{{clustering_name}}:{{cluster_member_type}}:{{method_name}}:{{method_description}}:{{cluster_names}}:{{clustering_method_parameters_JSON}}:{{clustering_method_input_datatypes}}"
+      merge: True
+      filter:
+        - cluster_names
 
 #cluster(c1,c2..etc) --> Cluster method
 
-	edges:
-		-index: clusters
-		 fromLabel: Method
-		 toLabel: cluster
-		 label: clusterInMethod
-		 from: "Method:{{clustering_name}}:{{description}}:{{clustering_method}}:{{clustering_method_parameters_JSON}}:{{clustering_method_input_datatypes}}"
-		 to: {{_index.cluster_label}}
+  edges:
+    - index: cluster_names
+      fromLabel: Method
+      toLabel: Cluster
+      label: clustersFound
+      from: "method:{{clustering_name}}:{{cluster_member_type}}:{{method_name}}:{{method_description}}:{{cluster_names}}:{{clustering_method_parameters_JSON}}:{{clustering_method_input_datatypes}}"
+      to: "cluster:{{method_name}}:{{_index}}"
 
 #cluster_samples --> cluster(c1,c2..etc)
 
-	edges:
-		-index: groups
-		 fromLabel: Cluster
-		 toLabel: sample
-		 label: sampleInCluster
-		 from: "Method:{{clustering_name}}:{{description}}:{{clustering_method}}:{{clustering_method_parameters_JSON}}:{{clustering_method_input_datatypes}}"
-		 to: {{_index.members}}
+- label: Cluster
+  vertexes:
+    - label: Cluster
+      gid: "cluster:{{method_name}}:{{cluster_name}}"
+      merge: True
 
+  edges:
+    - index: samples
+      fromLabel: Cluster
+      toLabel: Biosample
+      label: clusteredSamples
+      from: "cluster:{{method_name}}:{{cluster_name}}"
+      to: "biosample:{{_index}}"
