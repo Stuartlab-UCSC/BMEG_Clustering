@@ -26,7 +26,7 @@ test:clusters.jsonl
 	\
 
 clusters.jsonl: compile_pb.done
-	rm -f 1.tmp ;
+	rm -f 1.tmp 2.tmp;
 	\
 	for clustering in `find $(DATA_DIR) -name "*_for_bmeg.txt" | sed -e 's,$(DATA_DIR)/,,' -e 's/_for_bmeg.txt//' ` ; do \
 		echo $${clustering} ; \
@@ -36,13 +36,17 @@ clusters.jsonl: compile_pb.done
 			--clusters_file $(DATA_DIR)/$${clustering}_for_bmeg.txt \
 			; \
 		\
-		cat JSONmessage.txt \
+		cat JSONMethodMessage.txt \
 		>> 1.tmp ; \
+		cat JSONClustersMessage.txt \
+		>> 2.tmp ; \
 	done ;
 	\
-	mv 1.tmp $@ ;
+	mv 1.tmp MethodMessages.txt;
 	\
-	rm -f 1.tmp JSONmessage.txt ;
+	mv 2.tmp ClusterMessages.txt;
+	\
+	rm -f 1.tmp JSONMethodMessage.txt JSONClustersMessage.txt;
 	\
 
 JSONmessage.txt: compile_pb.done
