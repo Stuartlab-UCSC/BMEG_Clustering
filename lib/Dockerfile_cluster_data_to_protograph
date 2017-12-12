@@ -1,0 +1,27 @@
+# Dockerfile_cluster_data_to_protograph
+# convert cluster data into BMEG protograph
+
+FROM python:3
+FROM openjdk:8
+
+## Remain current
+RUN apt-get update -qq
+RUN apt-get dist-upgrade -y
+
+RUN apt-get install -y python3-pip
+
+## install python packages
+RUN pip3 install protobuf
+
+## install protograph jar
+RUN mkdir /bmeg_lib
+RUN wget -q -P /bmeg_lib https://github.com/bmeg/protograph/releases/download/0.0.5/protograph.jar
+
+## TODO convert cluster and metadata files to protobuf
+
+## TODO convert protobuf to protograph
+
+## TODO output results to output directory
+
+## default command
+CMD echo "This is the docker container for converting cluster data files to protograph."

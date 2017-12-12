@@ -14,7 +14,15 @@ PROTOGRAPH_OUTPUT_FILE_PREFIX=protograph_out
 
 TARGETS=clusters.jsonl JSONmessage.txt
 
-test:clusters.jsonl
+DOCKER_HUB_ID=stuartlab
+
+test:
+
+build_docker_image:
+	docker build -f Dockerfile --tag $(DOCKER_HUB_ID)/convert_cluster_data_to_protograph .
+
+
+test_protograph:clusters.jsonl
 	head -n 1 $< \
 	> 1.tmp ;
 	\
