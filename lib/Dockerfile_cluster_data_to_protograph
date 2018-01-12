@@ -14,12 +14,25 @@ RUN apt-get install -y python3-pip
 RUN pip3 install protobuf
 
 ## install protograph jar
-RUN mkdir /bmeg_lib
-RUN wget -q -P /bmeg_lib https://github.com/bmeg/protograph/releases/download/0.0.5/protograph.jar
+WORKDIR /bmeg_lib
+#RUN wget -q -P /bmeg_lib https://github.com/bmeg/protograph/releases/download/0.0.5/protograph.jar
+RUN wget -q --output-document=/bmeg_lib/protograph.jar https://github.com/bmeg/protograph/releases/download/0.0.15/protograph-0.0.15-standalone.jar
+
+## copy schema files
+COPY lib/BMEG_pb2.py /bmeg_lib
+COPY lib/cluster.yml /bmeg_lib
+
+## copy BMEG_addData.py tool
+COPY lib/BMEG_addData.py /bmeg_lib
+
+## copy makefile
+COPY lib/docker_tasks.mak /bmeg_lib/Makefile
 
 ## TODO convert cluster and metadata files to protobuf
+# python3 /bmeg_lib/BMEG_addData.py -metadataFile /data/test_clusters_metadata.txt -clusterFile /data/test_clusters_for_bmeg.txt
 
 ## TODO convert protobuf to protograph
+# java -jar protograph.jar --protograph cluster.yml --input JSONClustersMessage.txt --output method.test
 
 ## TODO output results to output directory
 

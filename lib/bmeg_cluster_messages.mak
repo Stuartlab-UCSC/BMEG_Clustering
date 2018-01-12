@@ -19,7 +19,7 @@ DOCKER_HUB_ID=stuartlab
 test:
 
 build_docker_image:
-	docker build -f Dockerfile --tag $(DOCKER_HUB_ID)/convert_cluster_data_to_protograph .
+	docker build --file Dockerfile --tag $(DOCKER_HUB_ID)/convert_cluster_data_to_protograph .
 
 
 test_protograph:clusters.jsonl
