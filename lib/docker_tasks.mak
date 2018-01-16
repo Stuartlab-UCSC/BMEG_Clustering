@@ -3,9 +3,26 @@ THIS_DIR=$(shell pwd)
 DATA_DIR=/data/data
 LIB_DIR=/bmeg_lib
 
-test:protograph_edges
+convert_messages: protobuf_messages protograph_edges
 
 protograph_edges:
+	java -jar $(LIB_DIR)/protograph.jar \
+		--protograph $(LIB_DIR)/cluster.yml \
+		--input $(DATA_DIR)/protobuf_messages/protobuf_method.jsonl \
+		--output protobuf_method \
+		--label Method \
+	;
+	\
+	java -jar $(LIB_DIR)/protograph.jar \
+		--protograph $(LIB_DIR)/cluster.yml \
+		--input $(DATA_DIR)/protobuf_messages/protobuf_clusters.jsonl \
+		--output protobuf_clusters \
+		--label Cluster \
+	;
+	\
+	cp *.Vertex.json $(DATA_DIR)/protobuf_messages/.
+	cp *.Edge.json $(DATA_DIR)/protobuf_messages/.
+	\
 
 protobuf_messages:
 	mkdir -p $@ ;
@@ -36,4 +53,3 @@ protobuf_messages:
 	\
 	rm -f 1.tmp 2.tmp JSONMethodMessage.txt JSONClustersMessage.txt ;
 	\
-
