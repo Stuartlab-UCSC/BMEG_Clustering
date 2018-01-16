@@ -1,0 +1,15 @@
+This is a docker image for converting cluster data files to protograph files.
+
+### INPUT ###
+
+The required input is 2 files for each clustering result. The "_metadata.txt" file contains the metadata for a clustering method. The "_for_bmeg.txt" file contains the sample cluster assignments. An example of each is shown at the end of this help. Multiple clustering results can be converted at once, so long as the naming convention is followed: "cluster_name__metadata.txt" and "cluster_name_for_bmeg.txt".
+
+### COMMAND ###
+
+To run the conversion scripts, go into the directory containing input data files and then do:
+
+docker run -ti --entrypoint ./clusters_to_protograph.sh -v `pwd`:/data stuartlab/convert_cluster_data_to_protograph
+
+### OUTPUT ###
+
+The output is a directory named "protograph" which contains the clustering information in protocol buffers messages as well as protograph vertices and edges.
