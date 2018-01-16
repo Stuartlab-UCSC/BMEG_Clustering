@@ -15,7 +15,6 @@ RUN pip3 install protobuf
 
 ## install protograph jar
 WORKDIR /bmeg_lib
-#RUN wget -q -P /bmeg_lib https://github.com/bmeg/protograph/releases/download/0.0.5/protograph.jar
 RUN wget -q --output-document=/bmeg_lib/protograph.jar https://github.com/bmeg/protograph/releases/download/0.0.15/protograph-0.0.15-standalone.jar
 
 ## copy schema files
@@ -26,15 +25,22 @@ COPY lib/cluster.yml /bmeg_lib
 COPY lib/BMEG_addData.py /bmeg_lib
 
 ## copy makefile
-COPY lib/docker_tasks.mak /bmeg_lib/Makefile
+#COPY lib/docker_tasks.mak /bmeg_lib/Makefile
 
-## TODO convert cluster and metadata files to protobuf
-# python3 /bmeg_lib/BMEG_addData.py -metadataFile /data/test_clusters_metadata.txt -clusterFile /data/test_clusters_for_bmeg.txt
+## copy clusters_to_protograph.sh
+COPY lib/clusters_to_protograph.sh /bmeg_lib/.
+RUN chmod ugo+x /bmeg_lib/clusters_to_protograph.sh
 
-## TODO convert protobuf to protograph
-# java -jar protograph.jar --protograph cluster.yml --input JSONClustersMessage.txt --output method.test
+## copy help stuff
+COPY lib/help.sh /bmeg_lib/.
+RUN chmod ugo+x /bmeg_lib/help.sh
+COPY lib/help.txt /bmeg_lib/.
 
-## TODO output results to output directory
+## copy example directory
+COPY example /example
 
 ## default command
-CMD echo "This is the docker container for converting cluster data files to protograph."
+CMD ./help.sh
+
+## to run scripts, do this in your data directory
+## docker run -ti --entrypoint ./clusters_to_protograph.sh -v `pwd`:/data stuartlab/convert_cluster_data_to_protograph
