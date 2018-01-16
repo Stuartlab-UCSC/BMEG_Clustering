@@ -1,6 +1,0 @@
-clustering_name	PanCancAtlas k28 iCluster
-cluster_member_type	samples
-method_name	iCluster
-method_description	This is the k=28 iCluster solution for PanCanAtlas samples using 5 input datatypes: copy number, DNA methylation, mRNA expression, microRNA, and RPPA.
-method_parameters_JSON	{"k":28}
-method_input_datatypes_JSON	["copy number","DNA methylation","mRNA expression","microRNA","RPPA"]

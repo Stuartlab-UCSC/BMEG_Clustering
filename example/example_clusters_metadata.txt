@@ -1,0 +1,6 @@
+clustering_name	some_method_name on data_X
+cluster_member_type	samples
+method_name	some_method_name
+method_description	This is the clustering assignment for running some_method_name on data_X.
+method_parameters_JSON	{"k":5}
+method_input_datatypes_JSON	["copy number","DNA methylation","mRNA expression","microRNA","RPPA"]
