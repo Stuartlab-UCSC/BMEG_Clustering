@@ -1,16 +1,17 @@
+# protograph docs at https://github.com/bmeg/protograph
 # edges going from geneset to genes
-- label: geneset
+- label: Geneset
   gid: "geneset:{{setsName}}:{{genesetName}}"
   vertexes:
-    - label: geneset
+    - label: Geneset
       merge: True
       filter:
         - genes
 
   edges:
     - index: genes
-      fromLabel: geneset
-      toLabel: gene
+      fromLabel: Geneset
+      toLabel: Gene
       label: genesetGene
       from: "geneset:{{setsName}}:{{genesetName}}"
       to: "gene:{{_index}}"

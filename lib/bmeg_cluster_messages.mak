@@ -27,7 +27,7 @@ test:
 		--protograph $(LIB_DIR)/genesets.yml \
 		--input gmt_pb.jsonl \
 		--output genesets \
-		--label geneset \
+		--label Geneset \
 
 build_docker_image:
 	docker build --file Dockerfile --tag $(DOCKER_HUB_ID)/convert_cluster_data_to_protograph .
@@ -61,17 +61,17 @@ clusters.jsonl: compile_pb.done
 		>> 2.tmp ; \
 	done ;
 	\
-	mv 1.tmp MethodMessages.txt;
+	mv 1.tmp MethodMessages.txt ;
 	\
-	mv 2.tmp ClusterMessages.txt;
+	mv 2.tmp ClusterMessages.txt ;
 	\
 	rm -f 1.tmp JSONMethodMessage.txt JSONClustersMessage.txt;
 	\
 
 JSONmessage.txt: compile_pb.done
 	python3 $(LIB_DIR)/BMEG_addData.py \
-		--metadata_file $(TEST_METADATA_FILE) \
-		--clusters_file $(CLUSTER_ASSIGNMENT_FILE) \
+		--metadata_file ./example/example_clusters_metadata.txt \
+		--clusters_file ./example/example_clusters_for_bmeg.txt \
 		;
 
 compile_pb.done:

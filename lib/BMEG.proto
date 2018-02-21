@@ -23,7 +23,7 @@ message Cluster {
 }
 
 // gmt geneset
-message gmtGeneset {
+message Geneset {
 	string setsName = 1;
 	string source = 2;
 	string filename = 3;

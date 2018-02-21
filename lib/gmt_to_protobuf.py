@@ -85,7 +85,7 @@ def gmt_to_protobuf_jsonl(gmt_file_name, attributes, output_file_name="gmt_pb.js
         for line in fileObj:
             line = line.rstrip("\r\n")
             fields = line.split("\t")
-            geneset_pb = BMEG_pb2.gmtGeneset()
+            geneset_pb = BMEG_pb2.Geneset()
             geneset_pb.genesetName = fields[0]
             geneset_pb.description = fields[1]
             geneset_pb.genes.extend(fields[2:])
