@@ -18,6 +18,7 @@ DOCKER_HUB_ID=stuartlab
 
 test:
 	python3 $(LIB_DIR)/gmt_to_protobuf.py \
+		-v \
 		--metadata-file example/gmt_metadata.txt \
 		--gmt-file example/hallmarks.gmt \
 	;

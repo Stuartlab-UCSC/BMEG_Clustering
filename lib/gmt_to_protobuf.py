@@ -85,13 +85,13 @@ def gmt_to_protobuf_jsonl(gmt_file_name, attributes, output_file_name="gmt_pb.js
         for line in fileObj:
             line = line.rstrip("\r\n")
             fields = line.split("\t")
-            geneset_pb = BMEG_pb2.gmt_geneset()
-            geneset_pb.geneset_name = fields[0]
+            geneset_pb = BMEG_pb2.gmtGeneset()
+            geneset_pb.genesetName = fields[0]
             geneset_pb.description = fields[1]
             geneset_pb.genes.extend(fields[2:])
 
             geneset_pb.filename = attributes["filename"]
-            geneset_pb.sets_name = attributes["sets_name"]
+            geneset_pb.setsName = attributes["setsName"]
             geneset_pb.source = attributes["source"]
 
             strJson = convert_pb_to_compact_json(geneset_pb)
@@ -107,12 +107,13 @@ def collect_attributes(metadata_file_name):
     with open(metadata_file_name, "r") as fileObj:
         for line in fileObj:
             fields = line.rstrip("\r\n").split("\t", 1)
-            key = fields[0].lower()
+            key = fields[0]
             val = fields[1]
-            if key in ["source", "sets_name"]:
+            if key in ["source", "setsName"]:
                 attributes[key] = val
             else:
                 pass
+    logging.debug("%s" % (str(attributes)))
     return attributes
 
 #:####################################

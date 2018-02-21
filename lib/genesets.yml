@@ -1,14 +1,16 @@
 # edges going from geneset to genes
 - label: geneset
-  gid: "geneset:{{sets_name}}:{{geneset_name}}"
+  gid: "geneset:{{setsName}}:{{genesetName}}"
   vertexes:
     - label: geneset
       merge: True
+      filter:
+        - genes
 
   edges:
     - index: genes
       fromLabel: geneset
       toLabel: gene
-      label: geneset_gene
-      from: "geneset:{{sets_name}}:{{geneset_name}}"
+      label: genesetGene
+      from: "geneset:{{setsName}}:{{genesetName}}"
       to: "gene:{{_index}}"
