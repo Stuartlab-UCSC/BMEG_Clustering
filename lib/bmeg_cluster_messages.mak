@@ -17,6 +17,10 @@ TARGETS=clusters.jsonl JSONmessage.txt
 DOCKER_HUB_ID=stuartlab
 
 test:
+	python3 $(LIB_DIR)/gmt_to_protobuf.py \
+		--metadata-file example/gmt_metadata.txt \
+		--gmt-file example/h.all.v5.1.symbols.gmt \
+	;
 
 build_docker_image:
 	docker build --file Dockerfile --tag $(DOCKER_HUB_ID)/convert_cluster_data_to_protograph .
