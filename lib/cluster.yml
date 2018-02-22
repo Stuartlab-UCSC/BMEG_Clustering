@@ -1,8 +1,8 @@
 # edges going from a clustering method to its cluster names
 - label: Method
-  gid: "method:{{clusteringName}}:{{clusterMemberType}}:{{methodName}}:{{methodDescription}}:{{clusterNames}}:{{clusteringMethodParametersJSON}}:{{clusteringMethodInputDatatypes}}"
   vertexes:
     - label: Method
+      gid: "method:{{clusteringName}}:{{clusterMemberType}}:{{methodName}}:{{methodDescription}}:{{clusterNames}}:{{clusteringMethodParametersJSON}}:{{clusteringMethodInputDatatypes}}"
       merge: True
       filter:
         - clusterNames
@@ -18,9 +18,9 @@
 
 # edges going from cluster name to cluster members
 - label: Cluster
-  gid: "cluster:{{methodName}}:{{clusterName}}"
   vertexes:
     - label: Cluster
+      gid: "cluster:{{methodName}}:{{clusterName}}"
       merge: True
 
   edges:
