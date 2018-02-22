@@ -8,7 +8,7 @@ The required input is 2 files for each clustering result. The "_metadata.txt" fi
 
 To run the conversion scripts, go into the directory containing input data files and then do:
 
-docker run -ti --entrypoint ./clusters_to_protograph.sh -v `pwd`:/data stuartlab/convert_cluster_data_to_protograph
+docker run --entrypoint ./clusters_to_protograph.sh -v `pwd`:/data stuartlab/convert_cluster_data_to_protograph
 
 ### OUTPUT ###
 

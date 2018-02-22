@@ -1,0 +1,15 @@
+This is a docker image for converting gmt files to protograph files.
+
+### INPUT ###
+
+The required input is 2 files for each gmt file. The "_metadata.txt" file contains the metadata for a gmt file. The ".gmt" file contains the genesets. An example of each is shown at the end of this help. Multiple GMT files can be converted at once, so long as the naming convention is followed: "example_genesets_metadata.txt" and "example_genesets.gmt".
+
+### COMMAND ###
+
+To run the conversion scripts, go into the directory containing input data files and then do:
+
+docker run --entrypoint ./gmts_to_protograph.sh -v `pwd`:/data stuartlab/convert_cluster_data_to_protograph
+
+### OUTPUT ###
+
+The output is a directory named "protograph" which contains the genesets information in protocol buffers messages as well as protograph vertices and edges.

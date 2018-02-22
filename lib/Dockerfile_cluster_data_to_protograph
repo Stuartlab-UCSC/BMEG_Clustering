@@ -20,21 +20,36 @@ RUN wget -q --output-document=/bmeg_lib/protograph.jar https://github.com/bmeg/p
 ## copy schema files
 COPY lib/BMEG_pb2.py /bmeg_lib
 COPY lib/cluster.yml /bmeg_lib
+COPY lib/genesets.yml /bmeg_lib
 
-## copy BMEG_addData.py tool
+## copy protobuf conversion tools
 COPY lib/BMEG_addData.py /bmeg_lib
+COPY lib/gmt_to_protobuf.py /bmeg_lib
 
 ## copy makefile
 #COPY lib/docker_tasks.mak /bmeg_lib/Makefile
 
-## copy clusters_to_protograph.sh
+## copy protograph conversion tools
 COPY lib/clusters_to_protograph.sh /bmeg_lib/.
-RUN chmod ugo+x /bmeg_lib/clusters_to_protograph.sh
+#RUN chmod ugo+x /bmeg_lib/clusters_to_protograph.sh
+
+COPY lib/gmts_to_protograph.sh /bmeg_lib/.
+#RUN chmod ugo+x /bmeg_lib/gmts_to_protograph.sh
 
 ## copy help stuff
 COPY lib/help.sh /bmeg_lib/.
-RUN chmod ugo+x /bmeg_lib/help.sh
-COPY lib/help.txt /bmeg_lib/.
+#RUN chmod ugo+x /bmeg_lib/help.sh
+
+COPY lib/help_sample_cluster.sh /bmeg_lib/.
+#RUN chmod ugo+x /bmeg_lib/help_sample_cluster.sh
+COPY lib/help_sample_cluster.txt /bmeg_lib/.
+
+COPY lib/help_gmt.sh /bmeg_lib/.
+#RUN chmod ugo+x /bmeg_lib/help_gmt.sh
+COPY lib/help_gmt.txt /bmeg_lib/.
+
+## permissions
+RUN chmod ugo+x /bmeg_lib/*.sh
 
 ## copy example directory
 COPY example /example
@@ -43,4 +58,5 @@ COPY example /example
 CMD ./help.sh
 
 ## to run scripts, do this in your data directory
-## docker run -ti --entrypoint ./clusters_to_protograph.sh -v `pwd`:/data stuartlab/convert_cluster_data_to_protograph
+## docker run --entrypoint ./clusters_to_protograph.sh -v `pwd`:/data stuartlab/convert_cluster_data_to_protograph
+## docker run --entrypoint ./gmts_to_protograph.sh -v `pwd`:/data stuartlab/convert_cluster_data_to_protograph

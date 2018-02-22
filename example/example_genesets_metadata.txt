@@ -1,0 +1,2 @@
+source	This is an example of a gmt file.
+setsName	example geneset file v1.0
