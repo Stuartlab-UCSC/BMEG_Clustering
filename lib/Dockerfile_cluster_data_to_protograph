@@ -31,21 +31,15 @@ COPY lib/gmt_to_protobuf.py /bmeg_lib
 
 ## copy protograph conversion tools
 COPY lib/clusters_to_protograph.sh /bmeg_lib/.
-#RUN chmod ugo+x /bmeg_lib/clusters_to_protograph.sh
-
 COPY lib/gmts_to_protograph.sh /bmeg_lib/.
-#RUN chmod ugo+x /bmeg_lib/gmts_to_protograph.sh
 
 ## copy help stuff
 COPY lib/help.sh /bmeg_lib/.
-#RUN chmod ugo+x /bmeg_lib/help.sh
 
 COPY lib/help_sample_cluster.sh /bmeg_lib/.
-#RUN chmod ugo+x /bmeg_lib/help_sample_cluster.sh
 COPY lib/help_sample_cluster.txt /bmeg_lib/.
 
 COPY lib/help_gmt.sh /bmeg_lib/.
-#RUN chmod ugo+x /bmeg_lib/help_gmt.sh
 COPY lib/help_gmt.txt /bmeg_lib/.
 
 ## permissions
